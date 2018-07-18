@@ -51,8 +51,10 @@ function copyDirectory(directory) {
 function getModuleDirectory(path, module) {
     var resultDirectory
 
-    if(path.length && path[0] == '.'){
-        path.splice(0, 1)
+    if(path.length && (path[0] == '.' || path[0] == '..')){
+        if(path[0] == '.')
+            path.splice(0, 1)
+        
         resultDirectory = copyDirectory(module.directory)
     }
     else

@@ -6,6 +6,7 @@
 </head>
 <body>
     <script>
+        /*
         var Number = require('number/number.js')
         var Polynom = require('polynom/polynom.js')
 
@@ -20,7 +21,28 @@
         //Number.add(a, b)
         //Number.add(a, b)
 
-        //console.log(a)
+        //console.log(a)*/
+
+        var View = require('view/view.js')
+        var Label = require('view/elements/label.js')
+
+        var view = View.create(document.body)
+
+        Label.add(view)
+
+        function redraw(view) {
+            view
+                .begin()
+                    .if(false, function(view) {
+                        view
+                            .label('true')
+                    })
+                    .label('text')
+                .end()
+        }
+
+        for(var i = 0; i < 3; ++i)
+            redraw(view)
     </script>
 </body>
 </html>
