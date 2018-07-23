@@ -1,7 +1,12 @@
 function begin() {
     var view = this
-    view.node = view.node.childs[view.node.childIndex]
-    view.node.childIndex = 0
+    //console.log(view.node.childs)
+    console.log(view.node)
+    view.node = view.node.childs[view.node.childIndex - 1]
+
+    if(view.node)
+        view.node.childIndex = 0
+
     return view
 }
 
@@ -32,12 +37,14 @@ function updateNode(node, name) {
         currentNode = createNode(node, name)
 
     ++node.childIndex
+
     currentNode.childIndex = 0
+    currentNode.ifState = false
 
     return currentNode
 }
 
-function _if(expression, body) {
+function _if(expression, ifBody) {
     var view = this
     var currentNode = updateNode(view.node, 'if')
 
@@ -46,7 +53,49 @@ function _if(expression, body) {
 
         var node = view.node
         view.node = currentNode
-        body(view)
+        ifBody(view)
+        view.node = node
+        view.node.ifState = true
+    }
+    else {
+        currentNode.reference.style.display = 'none'
+        view.node.ifState = false
+    }
+
+    return view
+}
+
+function elseIf(expression, elseIfBody) {
+    var view = this
+    var currentNode = updateNode(view.node, 'else_if')
+
+    if(expression && !view.node.ifState) {
+        currentNode.reference.style.display = 'block'
+
+        var node = view.node
+        view.node = currentNode
+        elseIfBody(view)
+        view.node = node
+        view.node.ifState = true
+    }
+    else {
+        currentNode.reference.style.display = 'none'
+        view.node.ifState = false
+    }
+
+    return view
+}
+
+function _else(elseBody) {
+    var view = this
+    var currentNode = updateNode(view.node, 'else')
+
+    if(!view.node.ifState) {
+        currentNode.reference.style.display = 'block'
+
+        var node = view.node
+        view.node = currentNode
+        elseBody(view)
         view.node = node
     }
     else {
@@ -56,8 +105,21 @@ function _if(expression, body) {
     return view
 }
 
-function _else() {
+function forEach(items, forEachBody) {
+    var view = this
 
+    var currentNode = updateNode(view.node, 'for_each')
+    var node = view.node
+    view.node = currentNode
+
+    items
+        .forEach(function(item, index) {
+            forEachBody(view, item, index)
+        })
+
+    view.node = node
+
+    return view
 }
 
 function create(container) {
@@ -65,7 +127,7 @@ function create(container) {
         reference:  null,
         parent:     null,
         childs:     [],
-        childIndex: 0
+        childIndex: 1
     }
 
     var containerNode = {
@@ -78,12 +140,15 @@ function create(container) {
     rootNode.childs.push(containerNode)
 
     return {
-        node:  rootNode,
+        node:    rootNode,
 
-        begin: begin,
-        end:   end,
-        if:    _if,
-        else:  _else
+        begin:    begin,
+        end:      end,
+        if:       _if,
+        else_if:  elseIf,
+        else:     _else,
+
+        for_each: forEach
     }
 }
 
