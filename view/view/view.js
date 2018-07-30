@@ -1,7 +1,5 @@
 function begin() {
     var view = this
-    //console.log(view.node.childs)
-    console.log(view.node)
     view.node = view.node.childs[view.node.childIndex - 1]
 
     if(view.node)

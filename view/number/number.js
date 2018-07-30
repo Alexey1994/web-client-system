@@ -21,7 +21,7 @@ function createPolynomFromNumber(number) {
     return polynom
 }
 
-function createNumberFromPolygon(polygon) {
+function createNumberFromPolynom(polynom) {
     var number = create()
 
     for(var i in polygon.data) {
@@ -58,7 +58,7 @@ function add(number1, number2) {
         return a + b
     })
 
-    console.log(polynom1)
+    console.log(createNumberFromPolynom(polynom1))
 
     /*var remain = 0
 

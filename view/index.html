@@ -45,7 +45,7 @@
     <div-->
 
     <script>
-        /*
+/*
         var Number = require('number/number.js')
         var Polynom = require('polynom/polynom.js')
 
@@ -60,128 +60,69 @@
         //Number.add(a, b)
         //Number.add(a, b)
 
-        //console.log(a)*/
+        //console.log(a)
+*/
 
+/*
+        var Catalog = require('view/components/catalog.js')
+
+        var catalogView = Catalog.create()
+        Catalog.redraw(catalogView, [
+            {
+                name: 'Denis',
+                image: '1.png'
+            },
+
+            {
+                name: 'Metro',
+                image: '2.jpg'
+            }
+        ])
+*/
         var View = require('view/view.js')
-        var Label = require('view/elements/label.js')
-        var Layout = require('view/elements/layout.js')
-        var TextInput = require('view/elements/text input.js')
-        var Block = require('view/elements/block.js')
-        var Image = require('view/elements/image.js')
+        var WebGL = require('view/elements/WebGL/WebGL.js')
 
         var view = View.create(document.body)
 
-        Label.add(view)
-        Layout.add(view)
-        TextInput.add(view)
-        Block.add(view)
-        Image.add(view)
+        WebGL.add(view)
 
-        var searchText = ''
-        var texts = ['text1', 'text2']
+        function redraw(view) {
+            view
+                .begin()
+                    .WebGL({
+                        width: '100%',
+                        height: '100%',
+
+                        draw: function(gl, createStaticModel, drawStaticModel) {
+                            var model1 = createStaticModel(
+                                [
+                                    0.0, 0.0, 0.0,
+                                    -1.0, 0.0, 0.0,
+                                    -1.0, -1.0, 0.0,
+                                    0.0, -1.0, 0.0
+                                ],
+
+                                [0, 1, 2, 0, 3, 2]
+                            )
 /*
-        function redraw(view) {
-            view
-                .begin()
-                    .layout({width: '50%', height: '50%', backgroundColor: '#0a0'})
-                    .begin()
-                        .label('text')
-                    .end()
+                            var model2 = createStaticModel(
+                                [
+                                    0.0, 0.0, 0.0,
+                                    1.0, 0.0, 0.0,
+                                    1.0, 1.0, 0.0
+                                ],
 
-                    .layout({width: '50%', height: '50%', backgroundColor: '#a00'})
-                    .begin()
-                        .for_each (texts, function(view, text) {
-                            view
-                                .if(text.indexOf(searchText) >= 0, function(view) {
-                                    view
-                                        .label(text)
-                                })
-                        })
-                    .end()
+                                [0, 1, 2]
+                            )*/
 
-                    .layout({width: '100%', height: '50%', backgroundColor: '#00a'})
-                    .begin()
-                        .text_input({oninput: function(event){ console.log(event) }})
-                    .end()
-                .end()
-        }*/
-
-        function redraw(view) {
-            view
-                .begin()
-                    .layout({
-                        width: '100%',
-                        height: '50px',
-                        zIndex: 1,
-                        backgroundColor: 'rgb(28, 66, 125)',
-                        boxShadow: '1px 1px 7px 0px #000'
+                            drawStaticModel(model1)
+                            //drawStaticModel(model2)
+                        }
                     })
-                    .begin()
-                        //.label('Приложения')
-                    .end()
-
-                    .layout({
-                        width: '100%',
-                        height: 'calc(100% - 50px)'
-                    })
-                    .begin()
-                        .block({
-                            width: 'calc(100%)',
-                            height: 'calc(100%)',
-                            padding: '7.5px 0 0 7.5px',
-                            backgroundColor: 'rgb(201, 209, 222)',
-                            boxShadow: '1px 1px 7px 0px #aaa'
-                        })
-                        .begin()
-                            .layout({
-                                width: '100%',
-                                height: '100%',
-                            })
-                            .begin()
-                            .for_each([{
-                                    name: 'Denis',
-                                    image: '1.png'
-                                },
-
-                                {
-                                    name: 'Metro',
-                                    image: '2.jpg'
-                                }],
-
-                                function(view, element) {
-                                view
-                                    .block({
-                                        width: '150px',
-                                        height: '200px',
-                                        margin: '7.5px 20px 20px 7.5px',
-                                        padding: '15px',
-                                        backgroundColor: '#fff',
-                                        boxShadow: '1px 1px 0px 0px rgb(23, 16, 82)'
-                                    })
-                                    .begin()
-                                        .image({
-                                            src: element.image,
-                                            width: '150px',
-                                            height: '150px'
-                                        })
-                                        .block({
-                                            width: '100%',
-                                            height: 'auto',
-                                            margin: '10px 0 0 0'
-                                        })
-                                        .begin()
-                                            .label(element.name)
-                                        .end()
-                                    .end()
-                            })
-                            .end()
-                        .end()
-                    .end()
                 .end()
         }
 
-        //for(var i = 0; i < 3; ++i)
-            redraw(view)
+        redraw(view)
     </script>
 </body>
 </html>

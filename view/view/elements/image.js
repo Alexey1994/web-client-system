@@ -32,8 +32,6 @@ function add(view) {
             style.padding = model.padding
 
         reference.src = model.src
-
-        console.log(reference.style)
     })
 }
 
