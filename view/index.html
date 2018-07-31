@@ -82,6 +82,20 @@
         var View = require('view/view.js')
         var WebGL = require('view/elements/WebGL/WebGL.js')
 
+        var Mouse = require('events/mouse.js')
+
+        Mouse.addXChangeListener(function(x) {
+            console.log(x)
+        })
+
+        Mouse.addYChangeListener(function(y) {
+            console.log(y)
+        })
+
+        Mouse.addLeftKeyChangeListener(function(leftKey) {
+            console.log(leftKey)
+        })
+
         var view = View.create(document.body)
 
         WebGL.add(view)
