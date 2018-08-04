@@ -81,19 +81,20 @@
 */
         var View = require('view/view.js')
         var WebGL = require('view/elements/WebGL/WebGL.js')
+        var StaticModel = require('view/elements/WebGL/static model.js')
 
         var Mouse = require('events/mouse.js')
 
         Mouse.addXChangeListener(function(x) {
-            console.log(x)
+            //console.log(x)
         })
 
         Mouse.addYChangeListener(function(y) {
-            console.log(y)
+            //console.log(y)
         })
 
         Mouse.addLeftKeyChangeListener(function(leftKey) {
-            console.log(leftKey)
+            //console.log(leftKey)
         })
 
         var view = View.create(document.body)
@@ -108,29 +109,31 @@
                         height: '100%',
 
                         draw: function(gl, createStaticModel, drawStaticModel) {
-                            var model1 = createStaticModel(
+                            var model1 = StaticModel.create(
+                                gl,
                                 [
                                     0.0, 0.0, 0.0,
                                     -1.0, 0.0, 0.0,
-                                    -1.0, -1.0, 0.0,
-                                    0.0, -1.0, 0.0
-                                ],
-
-                                [0, 1, 2, 0, 3, 2]
+                                    -1.0, -1.0, 0.0
+                                ]
                             )
-/*
-                            var model2 = createStaticModel(
+
+                            StaticModel.draw(gl, model1)
+
+                            var model2 = StaticModel.create(
+                                gl,
                                 [
                                     0.0, 0.0, 0.0,
                                     1.0, 0.0, 0.0,
-                                    1.0, 1.0, 0.0
-                                ],
+                                    1.0, 1.0, 0.0,
 
-                                [0, 1, 2]
-                            )*/
+                                    0.0, 0.0, 0.0,
+                                    1.0, 1.0, 0.0,
+                                    0.0, 1.0, 0.0
+                                ]
+                            )
 
-                            drawStaticModel(model1)
-                            //drawStaticModel(model2)
+                            StaticModel.draw(gl, model2)
                         }
                     })
                 .end()
